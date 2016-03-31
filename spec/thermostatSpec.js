@@ -1,3 +1,5 @@
+'use strict';
+
 describe('thermostat', function() {
   var thermostat;
 
@@ -45,4 +47,27 @@ describe('thermostat', function() {
     expect(thermostat.getTemperature()).toEqual(32);
   });
 
+  it('can reset temperature to default back to 20', function() {
+    thermostat.increase();
+    thermostat.resetTemperature();
+    expect(thermostat.getTemperature()).toEqual(20);
+  });
+
+  it('has green display when temp < 18 degree', function() {
+    for (var i = 0; i < 3; i++) {
+      thermostat.decrease();
+    }
+    expect(thermostat.displayColour()).toEqual("low-usage");
+  });
+
+  it('has yellow display when temp < 25 degree', function() {
+    expect(thermostat.displayColour()).toEqual('medium-usage');
+  });
+
+  it('has red display when temp > 24 degree', function() {
+    for (var i = 0; i < 5; i++) {
+      thermostat.increase();
+    }
+    expect(thermostat.displayColour()).toEqual('high-usage');
+  });
 });
