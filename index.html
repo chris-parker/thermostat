@@ -9,11 +9,32 @@
     <script>
 
     $( document ).ready(function() {
-      var thermostat = new Thermostat();
+      thermostat = new Thermostat();
 
       $( '#display' ).html(thermostat.getTemperature());
 
-      $( '#up' ).click(thermostat.increase());
+      $( '#up' ).on('click', function() {
+        thermostat.increase();
+        $( '#display' ).html(thermostat.getTemperature());
+      });
+
+      $( '#down' ).on('click', function() {
+        thermostat.decrease();
+        $( '#display' ).html(thermostat.getTemperature());
+      });
+
+      $( '#PSMon' ).on('click', function() {
+        thermostat.switchPowerSavingModeOn();
+      });
+
+      $( '#PSMoff' ).on('click', function() {
+        thermostat.switchPowerSavingModeOff();
+      });
+
+      $( '#reset' ).on('click', function() {
+        thermostat.resetTemperature();
+        $( '#display' ).html(thermostat.getTemperature());
+      });
 
     });
 
