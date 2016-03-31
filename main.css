@@ -22,3 +22,15 @@
   width: 100px;
   margin: 5px;
 }
+
+.low-usage {
+  background-color: green;
+}
+
+.medium-usage {
+  background-color: yellow;
+}
+
+.high-usage {
+  background-color: red;
+}

@@ -4,6 +4,8 @@ $( document ).ready(function() {
 
   function updateTemperature() {
     $( '#display' ).html(thermostat.getTemperature());
+    $( '#display' ).attr('class', thermostat.energyUsage());
+    $( '#display' ).addClass( "display" );
   }
 
   $( '#up' ).on('click', function() {

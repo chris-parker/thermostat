@@ -61,7 +61,7 @@ Thermostat.prototype.resetTemperature = function() {
   this.switchPowerSavingModeOn();
 };
 
-Thermostat.prototype.displayColour = function() {
+Thermostat.prototype.energyUsage = function() {
   if (this.temperature < this.LOW_ENERGY_USAGE_LIMIT) {
     return 'low-usage';
   } else if (this.temperature >= this.HIGH_ENERGY_USAGE_LIMIT) {
