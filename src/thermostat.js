@@ -35,6 +35,9 @@ Thermostat.prototype.isMinimum = function() {
 };
 
 Thermostat.prototype.switchPowerSavingModeOn = function() {
+  if(this.temperature > this.MAX_POWER_SAVE_MODE) {
+    this.temperature = this.MAX_POWER_SAVE_MODE;
+  }
   this.powerSavingMode = true;
 };
 
@@ -55,6 +58,7 @@ Thermostat.prototype.isMaximum = function() {
 
 Thermostat.prototype.resetTemperature = function() {
   this.temperature = this.DEFAULT_TEMPERATURE;
+  this.switchPowerSavingModeOn();
 };
 
 Thermostat.prototype.displayColour = function() {

@@ -28,46 +28,63 @@ describe('thermostat', function() {
     expect(thermostat.getTemperature()).toBeGreaterThan(9);
   });
 
-  it('has a power saving mode', function() {
+  it('can reset temperature to default back to 20', function() {
+    thermostat.increase();
+    thermostat.switchPowerSavingModeOff();
+    thermostat.resetTemperature();
+    expect(thermostat.getTemperature()).toEqual(20);
     expect(thermostat.isPowerSavingModeOn()).toBeTruthy();
   });
 
-  it('has max temp of 25 when in power saving mode', function() {
-    for (var i = 0; i < 8; i++) {
-      thermostat.increase();
-    }
-    expect(thermostat.getTemperature()).toEqual(25);
-  })
+  describe('It has a PSM', function() {
+    it('is on by default', function() {
+      expect(thermostat.isPowerSavingModeOn()).toBeTruthy();
+    });
 
-  it('has max temp of 32 when not in power saving mode', function() {
-    thermostat.switchPowerSavingModeOff();
-    for (var i = 0; i < 15; i++) {
-      thermostat.increase();
-    }
-    expect(thermostat.getTemperature()).toEqual(32);
+    it('has max temp of 25 when on', function() {
+      for (var i = 0; i < 8; i++) {
+        thermostat.increase();
+      }
+      expect(thermostat.getTemperature()).toEqual(25);
+    })
+
+    it('has max temp of 32 when off', function() {
+      thermostat.switchPowerSavingModeOff();
+      for (var i = 0; i < 15; i++) {
+        thermostat.increase();
+      }
+      expect(thermostat.getTemperature()).toEqual(32);
+    });
+
+    it('decreases temp if PSM on after it was turned off and over 25', function() {
+      thermostat.switchPowerSavingModeOff();
+      for (var i = 0; i < 15; i++) {
+        thermostat.increase();
+      }
+      thermostat.switchPowerSavingModeOn();
+      expect(thermostat.getTemperature()).toEqual(25);
+    })
   });
 
-  it('can reset temperature to default back to 20', function() {
-    thermostat.increase();
-    thermostat.resetTemperature();
-    expect(thermostat.getTemperature()).toEqual(20);
-  });
 
-  it('has green display when temp < 18 degree', function() {
-    for (var i = 0; i < 3; i++) {
-      thermostat.decrease();
-    }
-    expect(thermostat.displayColour()).toEqual("low-usage");
-  });
 
-  it('has yellow display when temp < 25 degree', function() {
-    expect(thermostat.displayColour()).toEqual('medium-usage');
-  });
+  describe('It has three power modes', function() {
+    it('has green display when temp < 18 degree', function() {
+      for (var i = 0; i < 3; i++) {
+        thermostat.decrease();
+      }
+      expect(thermostat.displayColour()).toEqual("low-usage");
+    });
 
-  it('has red display when temp > 24 degree', function() {
-    for (var i = 0; i < 5; i++) {
-      thermostat.increase();
-    }
-    expect(thermostat.displayColour()).toEqual('high-usage');
+    it('has yellow display when temp < 25 degree', function() {
+      expect(thermostat.displayColour()).toEqual('medium-usage');
+    });
+
+    it('has red display when temp > 24 degree', function() {
+      for (var i = 0; i < 5; i++) {
+        thermostat.increase();
+      }
+      expect(thermostat.displayColour()).toEqual('high-usage');
+    });
   });
 });

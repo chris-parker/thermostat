@@ -6,45 +6,14 @@
     <link rel="stylesheet" href="main.css">
     <script src="src/thermostat.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script>
-
-    $( document ).ready(function() {
-      thermostat = new Thermostat();
-
-      $( '#display' ).html(thermostat.getTemperature());
-
-      $( '#up' ).on('click', function() {
-        thermostat.increase();
-        $( '#display' ).html(thermostat.getTemperature());
-      });
-
-      $( '#down' ).on('click', function() {
-        thermostat.decrease();
-        $( '#display' ).html(thermostat.getTemperature());
-      });
-
-      $( '#PSMon' ).on('click', function() {
-        thermostat.switchPowerSavingModeOn();
-      });
-
-      $( '#PSMoff' ).on('click', function() {
-        thermostat.switchPowerSavingModeOff();
-      });
-
-      $( '#reset' ).on('click', function() {
-        thermostat.resetTemperature();
-        $( '#display' ).html(thermostat.getTemperature());
-      });
-
-    });
-
-    </script>
+    <script src="src/interface.js"></script>
   </head>
   <body>
     <div class="wrapper">
 
       <div id="display" class="display">
       </div>
+      <div id="confirmation">PSM is on</div>
 
       <div class="center">
         <button id="up" class="button">up</button>
