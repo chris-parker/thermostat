@@ -2,6 +2,8 @@ $( document ).ready(function() {
   thermostat = new Thermostat();
   updateTemperature();
 
+  var params = { "appid":"6e22721b5b6b35d9917593df89de104a", "q":"Tokyo", "units":"metric" }
+
   function updateTemperature() {
     $( '#display' ).html(thermostat.getTemperature());
     $( '#display' ).attr('class', thermostat.energyUsage());
@@ -33,6 +35,20 @@ $( document ).ready(function() {
     thermostat.resetTemperature();
     updateTemperature();
     $( '#confirmation' ).html('PSM is on');
+  });
+
+  function updateWeather() {
+    $.get("http://api.openweathermap.org/data/2.5/weather", params, function( data ) {
+    $( '#cityname' ).html(data.name);
+    $( '#temperature' ).html(data.main.temp + "ºC");
+  });
+
+}
+
+  $( '#submit' ).on('click', function() {
+    var cityname = $( '#cityinput' ).val();
+    params.q = cityname;
+    updateWeather();
   });
 
 });
