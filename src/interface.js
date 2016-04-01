@@ -1,6 +1,7 @@
 $( document ).ready(function() {
   thermostat = new Thermostat();
   updateTemperature();
+  getTemperature();
 
   var params = { "appid":"6e22721b5b6b35d9917593df89de104a", "q":"Tokyo", "units":"metric" }
 
@@ -49,6 +50,24 @@ $( document ).ready(function() {
     var cityname = $( '#cityinput' ).val();
     params.q = cityname;
     updateWeather();
+  });
+
+  function getTemperature() {
+    var params = { "name":"therm1" }
+    $.get("http://localhost:9292/temperature", params, function( data ) {
+    thermostat.temperature = parseInt(data);
+    updateTemperature();
+  });
+
+}
+
+  function sendTemperature() {
+    var params = { "name":"therm1", "temperature":thermostat.temperature }
+    $.post("http://localhost:9292/temperature", params);
+  }
+
+  $( '#save' ).on('click', function() {
+    sendTemperature();
   });
 
 });
